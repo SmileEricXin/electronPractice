@@ -1,4 +1,5 @@
 import { Menu, Tray, app, dialog } from 'electron'
+import path from 'path'
 import { getWin } from '../index'
 
 let tray = null
@@ -24,8 +25,13 @@ app.on('quit', () => {
 
 // 创建系统托盘
 export function creatTray () {
-  // new Tray
-  tray = new Tray('./static/resource/win/icon.ico')
+  // 写法一
+  // 路径是：.\dist\win-ia32-unpacked\resources\static\resource\win, 后面部分不要加static
+  // tray = new Tray(path.join(__static, './resource/win/icon.ico'))
+
+  // 写法二
+  // 路径是：.\dist\win-ia32-unpacked\resources\app.asar\..\static\resource\win
+  tray = new Tray(path.join(__dirname, '../static/resource/win/icon.ico'))
 
   const contextMenu = Menu.buildFromTemplate([
     { 
