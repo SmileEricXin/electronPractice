@@ -1,9 +1,9 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
-import * as path from 'path'
-import { format as formatUrl } from 'url'
-import * as tray from './tray'
+const { app, BrowserWindow } = require('electron')
+const path = require('path')
+const { format } = require('url')
+const tray = require('./tray')
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -18,9 +18,9 @@ function createMainWindow() {
   }
 
   // 把html放入static
-  let indexPath = path.join(__static, '/html/index.html')
+  let indexPath = path.join(__dirname, '../../static/html/index.html')
   console.log('indexPath:', indexPath)
-  window.loadURL(formatUrl({
+  window.loadURL(format({
     pathname: indexPath,
     protocol: 'file',
     slashes: true
@@ -63,6 +63,10 @@ app.on('ready', () => {
   tray.creatTray()
 })
 
-export function getWin () {
+function getWin () {
   return mainWindow
+}
+
+module.exports = {
+  getWin
 }
