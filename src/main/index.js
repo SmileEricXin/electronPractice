@@ -17,6 +17,7 @@ function createMainWindow() {
     window.webContents.openDevTools()
   }
 
+  // __dirname 为：src\main
   console.log('main dirname:', __dirname)
 
   // 把html放入static
