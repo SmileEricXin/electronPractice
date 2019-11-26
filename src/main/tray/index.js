@@ -4,6 +4,13 @@ import { getWin } from '../index'
 
 let tray = null
 
+console.log(process.env)
+
+// 判断是否为开发环境
+function isDev () {
+  return process.env.Node_ENV === 'development'
+}
+
 // 激活窗口
 function activeMainWin () {
   let win = getWin()
@@ -25,13 +32,18 @@ app.on('quit', () => {
 
 // 创建系统托盘
 export function creatTray () {
-  // 写法一
-  // 路径是：.\dist\win-ia32-unpacked\resources\static\resource\win, 后面部分不要加static
-  // tray = new Tray(path.join(__static, './resource/win/icon.ico'))
 
-  // 写法二
-  // 路径是：.\dist\win-ia32-unpacked\resources\app.asar\..\static\resource\win
-  tray = new Tray(path.join(__dirname, '../static/resource/win/icon.ico'))
+  // __dirname 为：src\main\tray
+  console.log('__dirname:', __dirname)
+
+  // __dirname 表示当前文件所在路径
+  // __dirname 在正式环境，当前文件的路径是 ./resources/app 或者 ./resources/app.asar
+  // __dirname 在dev时，则是 src/main/tray
+  if (isDev()) {
+    tray = new Tray(path.join(__dirname, '../../../resource/win/icon.ico'))
+  } else {
+    tray = new Tray(path.join(__dirname, '/resource/win/icon.ico'))
+  }
 
   const contextMenu = Menu.buildFromTemplate([
     { 

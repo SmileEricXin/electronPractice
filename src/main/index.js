@@ -17,6 +17,8 @@ function createMainWindow() {
     window.webContents.openDevTools()
   }
 
+  console.log('main dirname:', __dirname)
+
   // 把html放入static
   let indexPath = path.join(__static, '/html/index.html')
   console.log('indexPath:', indexPath)

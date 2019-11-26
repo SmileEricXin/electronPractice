@@ -14,13 +14,14 @@
   "build": {
     "productName": "electron-builder-start",
     "appId": "org.simulatedgreg.electron-builder-start",
+    "asar": false,
     "directories": {
-      "output": "dist"
+      "output": "build_output"
     },
     "files": [
-      "dist/electron/**/*",
-      "node_modules/",
-      "package.json"
+      "package.json",
+      "packme",
+      "resource"
     ],
     "nsis": {
       "oneClick": false,
