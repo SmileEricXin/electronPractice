@@ -7,6 +7,7 @@ import * as tray from './tray'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
+
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow = null
 
@@ -21,7 +22,7 @@ function createMainWindow() {
   console.log('main dirname:', __dirname)
 
   // 把html放入static
-  let indexPath = path.join(__static, '/html/index.html')
+  let indexPath = path.join(__dirname, '../../static/html/index.html')
   console.log('indexPath:', indexPath)
   window.loadURL(formatUrl({
     pathname: indexPath,

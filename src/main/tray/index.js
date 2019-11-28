@@ -1,12 +1,18 @@
 import { Menu, Tray, app, dialog } from 'electron'
 import path from 'path'
 import { getWin } from '../index'
+import { enableLiveReload } from 'electron-compile';
 
 let tray = null
 
-console.log(process.env)
+// console.log(process.env)
+
+const isDevMode = process.execPath.match(/[\\/]electron/);
+
+if (isDevMode) enableLiveReload();
 
 // 判断是否为开发环境
+// electron-forge 时，没有 Node_ENV 变量
 function isDev () {
   return process.env.Node_ENV === 'development'
 }
@@ -39,7 +45,9 @@ export function creatTray () {
   // __dirname 表示当前文件所在路径
   // __dirname 在正式环境，当前文件的路径是 ./resources/app 或者 ./resources/app.asar
   // __dirname 在dev时，则是 src/main/tray
-  if (isDev()) {
+
+  console.log('isdev:', isDev())
+  if (isDevMode) {
     tray = new Tray(path.join(__dirname, '../../../resource/win/icon.ico'))
   } else {
     tray = new Tray(path.join(__dirname, '/resource/win/icon.ico'))

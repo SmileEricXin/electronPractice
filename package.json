@@ -2,14 +2,61 @@
   "name": "electron-builder-start",
   "version": "1.0.0",
   "license": "MIT",
+  "main": "src/main/index.js",
   "scripts": {
+    "start": "electron-forge start",
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
     "build": "yarn compile && electron-builder",
     "build:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "dependencies": {
-    "source-map-support": "^0.5.9"
+    "electron-devtools-installer": "^2.2.4",
+    "electron-squirrel-startup": "^1.0.0",
+    "source-map-support": "^0.5.9",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "electron": "2.0.7",
+    "electron-builder": "^20.28.1",
+    "electron-webpack": "^2.1.2",
+    "electron-forge": "^5.2.4",
+    "electron-prebuilt-compile": "4.0.0",
+    "webpack": "^4.16.5"
+  },
+  "config": {
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ],
+        "darwin": [
+          "zip"
+        ],
+        "linux": [
+          "deb",
+          "rpm"
+        ]
+      },
+      "electronPackagerConfig": {
+        "packageManager": "yarn"
+      },
+      "electronWinstallerConfig": {
+        "name": "electronvue"
+      },
+      "electronInstallerDebian": {},
+      "electronInstallerRedhat": {},
+      "github_repository": {
+        "owner": "",
+        "name": ""
+      },
+      "windowsStoreConfig": {
+        "packageName": "",
+        "name": "electronvue"
+      }
+    }
   },
   "build": {
     "productName": "electron-builder-start",
@@ -67,12 +114,6 @@
     "linux": {
       "icon": "build/icons"
     }
-  },
-  "devDependencies": {
-    "electron": "2.0.7",
-    "electron-builder": "^20.28.1",
-    "electron-webpack": "^2.1.2",
-    "webpack": "^4.16.5"
   },
   "resolutions": {
     "upath": "^1.0.5"
