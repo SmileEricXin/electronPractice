@@ -14,9 +14,9 @@ let mainWindow = null
 function createMainWindow() {
   const window = new BrowserWindow()
 
-  if (isDevelopment) {
-    window.webContents.openDevTools()
-  }
+  // if (isDevelopment) {
+  //   window.webContents.openDevTools()
+  // }
 
   // __dirname 为：src\main
   console.log('main dirname:', __dirname)
@@ -70,3 +70,36 @@ app.on('ready', () => {
 export function getWin () {
   return mainWindow
 }
+
+let tmpWin = null
+app.once('ready', () => {
+  app.on('protocol-test', (e, access) => {
+    console.log('[protocol]access:', access)
+
+    // 创建新窗口
+    tmpWin = new BrowserWindow({
+      width: 300,
+      height: 100
+    })
+
+    tmpWin.on('closed', () => {
+      console.log('tmpWin closed')
+      tmpWin = null
+    })
+  })
+})
+
+app.once('ready', () => {
+
+  // 
+  mainWindow.webContents.on('new-window', (e, url, frameName, disposition, options, additionalFeatures) => {
+    
+    // 阻止创建默认窗口
+    e.preventDefault()
+    if (/^app:\/\//.test(url)) {
+      app.emit('protocol-test', {
+        sender: mainWindow.webContents
+      }, url)
+    }
+  })
+})
